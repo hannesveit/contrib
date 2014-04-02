@@ -1,0 +1,4 @@
+Archives in __ARCHIVES_JV__ must be copied to contrib_build/archives for local development.
+
+Don't forget to move them to sourceforge later, so they can be downloaded by cmake!
+
