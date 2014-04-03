@@ -64,8 +64,8 @@
 ##       - however: exec_process seems to handle our arguments incorreclty (at least on Windows). Check functionality before you commit!
 
 # Determine what to build (all or single library)
-set( BUILD_TYPE LIST CACHE STRING "Can be used to restrict building to a single library: ALL,SEQAN,LIBSVM,XERCESC,BOOST,GSL,COINOR,BZIP2,ZLIB,GLPK,EIGEN,WILDMAGIC,LIBKDTREE")
-set( VALID_BUILD_TYPES "ALL" "SEQAN" "LIBSVM" "XERCESC" "BOOST" "GSL" "COINOR" "BZIP2" "ZLIB" "GLPK" "EIGEN" "WILDMAGIC" "LIBKDTREE")
+set( BUILD_TYPE LIST CACHE STRING "Can be used to restrict building to a single library: ALL,SEQAN,LIBSVM,XERCESC,BOOST,GSL,COINOR,BZIP2,ZLIB,GLPK,EIGEN,WILDMAGIC,LIBKDTREE,LEMON")
+set( VALID_BUILD_TYPES "ALL" "SEQAN" "LIBSVM" "XERCESC" "BOOST" "GSL" "COINOR" "BZIP2" "ZLIB" "GLPK" "EIGEN" "WILDMAGIC" "LIBKDTREE" "LEMON")
 # check build type
 if (BUILD_TYPE STREQUAL "HELP" OR BUILD_TYPE STREQUAL "LIST")
   message(STATUS "===========================================================================")
@@ -129,6 +129,7 @@ set(COINOR_DIR ${CONTRIB_BIN_SOURCE_DIR}/CoinMP-1.3.3)
 set(EIGEN_DIR ${CONTRIB_BIN_SOURCE_DIR}/eigen-eigen-ffa86ffb5570)
 set(WILDMAGIC_DIR ${CONTRIB_BIN_SOURCE_DIR}/WildMagic5)
 set(LIBKDTREE_DIR ${CONTRIB_BIN_SOURCE_DIR}/libkdtreeplusplus)
+set(LEMON_DIR ${CONTRIB_BIN_SOURCE_DIR}/lemon-7a833615b224)
 
 ## source(archive) paths
 ## PLEASE upload all source archives to
@@ -192,6 +193,10 @@ set(ARCHIVE_LIBKDTREE libkdtreeplusplus.tar.gz)
 set(ARCHIVE_LIBKDTREE_TAR libkdtreeplusplus.tar)
 set(ARCHIVE_LIBKDTREE_SHA1 "35bb8b02f65af3b871c9a7c8b579bc8674667d5f")
 
+set(ARCHIVE_LEMON lemon-7a833615b224.tar.gz)
+set(ARCHIVE_LEMON_TAR lemon-7a833615b224.tar)
+set(ARCHIVE_LEMON_SHA1 "5e966febbe5df0eebb75f80c3f8c7200a1f270d5")
+
 ## necessary for cleanup .. change if install process of library changes
 set(INCLUDE_DIR_BOOST ${CONTRIB_BIN_INCLUDE_DIR}/boost)
 set(INCLUDE_DIR_XERCES ${CONTRIB_BIN_INCLUDE_DIR}/xercesc)
@@ -201,6 +206,7 @@ set(INCLUDE_DIR_GLPK ${CONTRIB_BIN_INCLUDE_DIR}/GLPK)
 set(INCLUDE_DIR_COINOR ${CONTRIB_BIN_INCLUDE_DIR}/coin)
 set(INCLUDE_DIR_EIGEN ${CONTRIB_BIN_INCLUDE_DIR}/eigen3)
 set(INCLUDE_DIR_WILDMAGIC ${CONTRIB_BIN_INCLUDE_DIR}/WildMagic5)
+set(INCLUDE_DIR_LEMON ${CONTRIB_BIN_INCLUDE_DIR}/lemon)
 
 ## hack for simple libs that do not have include directories
 set(INCLUDE_FILES_LIBSVM ${CONTRIB_BIN_INCLUDE_DIR}/svm.h)
@@ -334,6 +340,7 @@ include ("${CMAKE_SOURCE_DIR}/libraries.cmake/coinor.cmake")
 include ("${CMAKE_SOURCE_DIR}/libraries.cmake/eigen.cmake")
 include ("${CMAKE_SOURCE_DIR}/libraries.cmake/wildmagic.cmake")
 include ("${CMAKE_SOURCE_DIR}/libraries.cmake/libkdtreeplusplus.cmake")
+include ("${CMAKE_SOURCE_DIR}/libraries.cmake/lemon.cmake")
 
 ## build mac os x specific C/C++ flags
 set( OPENMS_CONTRIB_MACOSX_MIXED_MODE 0 CACHE INTERNAL "building multiple architectures on MacOSX" FORCE)
@@ -493,6 +500,16 @@ if (BUILD_TYPE STREQUAL "ALL" OR BUILD_TYPE STREQUAL "LIBKDTREE")
   OPENMS_CLEAN_LIB("LIBKDTREE")
   OPENMS_CONTRIB_BUILD_LIBKDTREE()
   OPENMS_COPY_LIBS("LIBKDTREE")
+endif()
+
+##################################################
+###       LEMON                                ###
+##################################################
+
+if (BUILD_TYPE STREQUAL "ALL" OR BUILD_TYPE STREQUAL "LEMON")
+  OPENMS_CLEAN_LIB("LEMON")
+  OPENMS_CONTRIB_BUILD_LEMON()
+  OPENMS_COPY_LIBS("LEMON")
 endif()
 
 
